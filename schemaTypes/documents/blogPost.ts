@@ -54,6 +54,9 @@ export default defineType({
       type: 'image',
       options: {
         hotspot: true,
+        aiAssist: {
+          imageDescriptionField: 'alt',
+        },
       },
       fields: [
         {
@@ -82,6 +85,9 @@ export default defineType({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'array',
+      options: {
+        aiAssist: {},
+      },
       of: [
         defineArrayMember({
           type: 'block',
@@ -144,22 +150,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       group: 'meta',
     }),
-    defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [defineArrayMember({type: 'reference', to: [{type: 'category'}]})],
-      validation: (Rule) => Rule.min(1).max(3),
-      group: 'meta',
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [defineArrayMember({type: 'reference', to: [{type: 'tag'}]})],
-      group: 'meta',
-    }),
-
+    
     // SEO fields
     defineField({
       name: 'seo',
