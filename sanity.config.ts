@@ -8,6 +8,7 @@ import {
 } from 'sanity/presentation'
 import {table} from '@sanity/table'
 import {media} from 'sanity-plugin-media'
+import {assist} from '@sanity/assist'
 import {BugIcon, RocketIcon} from '@sanity/icons'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
@@ -19,6 +20,7 @@ const previewOrigin =
 
 const sharedPlugins = [
   structureTool({structure}),
+  assist(),
   presentationTool({
     previewUrl: {
       origin: previewOrigin,
@@ -75,6 +77,11 @@ export default defineConfig([
     dataset: 'production',
     plugins: sharedPlugins,
     schema: {types: schemaTypes},
+    form: {
+      image: {
+        assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
+      },
+    },
   },
   {
     name: 'dev',
@@ -85,5 +92,10 @@ export default defineConfig([
     dataset: 'dev',
     plugins: sharedPlugins,
     schema: {types: schemaTypes},
+    form: {
+      image: {
+        assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
+      },
+    },
   },
 ])
