@@ -2,6 +2,7 @@ import {defineType, defineField, defineArrayMember} from 'sanity'
 import {FiEdit} from 'react-icons/fi'
 import {portableTextConfig} from '../objects/portableTextConfig'
 
+
 export default defineType({
   name: 'blogPost',
   title: 'All Blog Posts',
@@ -171,7 +172,18 @@ export default defineType({
     type: 'seo',
     group: 'content',
   }),
- // Hidden: mapped from Featured image / Meta title / Meta description at display time
+
+
+    defineField({
+      name: 'noIndex',
+      title: 'No Index and No Follow?',
+      type: 'boolean',
+      options: {aiAssist: {exclude: true}},
+      description: 'Prevent this page from appearing in search engines',
+      initialValue: false,
+      group: 'metadata',
+    }),
+    // Hidden: mapped from Featured image / Meta title / Meta description at display time
     defineField({
       name: 'ogImage',
       title: 'OG Image',

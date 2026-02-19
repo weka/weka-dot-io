@@ -18,9 +18,94 @@ const previewOrigin =
   process.env.SANITY_STUDIO_PREVIEW_URL ||
   'https://next-vercel-shadcn-1acv.vercel.app'
 
+// Default AI assist instructions for blogPost fields (so the Instruction panel is not empty)
+function makePromptBlock(text: string, key = 'p1') {
+  return {
+    _type: 'block' as const,
+    _key: key,
+    style: 'normal' as const,
+    markDefs: [],
+    children: [
+      {
+        _type: 'span' as const,
+        _key: `${key}-span`,
+        text,
+        marks: [] as string[],
+      },
+    ],
+  }
+}
+
 const sharedPlugins = [
   structureTool({structure}),
-  assist(),
+  assist({
+    __presets: {
+      blogPost: {
+        fields: [
+          {
+            path: 'featuredImage.alt',
+            instructions: [
+              {
+                _key: 'alt-default',
+                title: 'Generate alt text',
+                prompt: [
+                  makePromptBlock(
+                    'Write concise, descriptive alt text for this image so it is accessible and works well for search. Describe the image content and context in 1–2 sentences.',
+                    'alt-p1',
+                  ),
+                ],
+              },
+            ],
+          },
+          {
+            path: 'excerpt',
+            instructions: [
+              {
+                _key: 'excerpt-default',
+                title: 'Write excerpt',
+                prompt: [
+                  makePromptBlock(
+                    'Write a short, engaging excerpt or summary for this blog post. Capture the main point and encourage readers to continue. Keep it to a few sentences.',
+                    'excerpt-p1',
+                  ),
+                ],
+              },
+            ],
+          },
+          {
+            path: 'metaTitle',
+            instructions: [
+              {
+                _key: 'meta-title-default',
+                title: 'Suggest meta title',
+                prompt: [
+                  makePromptBlock(
+                    'Suggest an SEO meta title (50–60 characters) for this post. Include the main topic and brand or site name when it fits. Make it clear and click-worthy.',
+                    'meta-title-p1',
+                  ),
+                ],
+              },
+            ],
+          },
+          {
+            path: 'metaDescription',
+            instructions: [
+              {
+                _key: 'meta-desc-default',
+                title: 'Suggest meta description',
+                prompt: [
+                  makePromptBlock(
+                    'Write an SEO meta description (120–160 characters) for this post. Summarize the content clearly and include a reason to click. Use active language.',
+                    'meta-desc-p1',
+                  ),
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    },
+  }),
   presentationTool({
     previewUrl: {
       origin: previewOrigin,
