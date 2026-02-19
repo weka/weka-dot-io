@@ -171,18 +171,7 @@ export default defineType({
     type: 'seo',
     group: 'content',
   }),
-
-
-    defineField({
-      name: 'noIndex',
-      title: 'No Index and No Follow?',
-      type: 'boolean',
-      options: {aiAssist: {exclude: true}},
-      description: 'Prevent this page from appearing in search engines',
-      initialValue: false,
-      group: 'metadata',
-    }),
-    // Hidden: mapped from Featured image / Meta title / Meta description at display time
+ // Hidden: mapped from Featured image / Meta title / Meta description at display time
     defineField({
       name: 'ogImage',
       title: 'OG Image',
