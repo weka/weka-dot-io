@@ -21,7 +21,7 @@ export default defineType({
       validation: (Rule) =>
         Rule.max(160).min(120).warning('Meta descriptions should be between 120-160 characters'),
     }),
-    defineField({
+    /*defineField({
       name: 'ogTitle',
       title: 'Open Graph Title',
       type: 'string',
@@ -33,7 +33,7 @@ export default defineType({
       type: 'text',
       rows: 2,
       description: 'Description for social media sharing',
-    }),
+    }),*/
     defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
@@ -44,24 +44,24 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'noIndex',
-      title: 'No Index',
-      type: 'boolean',
-      description: 'Prevent this page from appearing in search engines',
-      initialValue: false,
-    }),
-    defineField({
       name: 'canonicalUrl',
       title: 'Canonical URL',
       type: 'url',
       description: 'Set if this content is duplicated elsewhere',
     }),
     defineField({
+      name: 'noIndex',
+      title: 'No Index',
+      type: 'boolean',
+      description: 'Prevent this page from appearing in search engines',
+      initialValue: false,
+    }),
+    /*defineField({
       name: 'focusKeywords',
       title: 'Focus Keywords',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
       description: 'Primary keywords for this content',
-    }),
+    }),*/
   ],
 })

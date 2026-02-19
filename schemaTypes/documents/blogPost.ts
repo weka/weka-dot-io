@@ -9,15 +9,13 @@ export default defineType({
   icon: FiEdit,
   groups: [
     {name: 'content', title: 'Content', default: true},
-    {name: 'meta', title: 'Metadata'},
-    {name: 'seo', title: 'SEO'},
-    {name: 'migration', title: 'Migration'},
+    {name: 'metadata', title: 'Metadata'},
   ],
   fields: [
-    // Status fields
+    // ─── Content (1–10) ─────────────────────────────────────────────────────
     defineField({
       name: 'status',
-      title: 'Production Status',
+      title: 'Migration Status',
       type: 'string',
       options: {
         list: [
@@ -27,14 +25,15 @@ export default defineType({
           {title: 'Help needed', value: 'helpNeeded'},
         ],
         layout: 'dropdown',
+        aiAssist: {exclude: true},
       },
-      group: 'meta',
+      group: 'content',
     }),
-    // Content fields
     defineField({
       name: 'title',
-      title: 'Blog Post Title',
+      title: 'Title',
       type: 'string',
+      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required().max(142),
       group: 'content',
     }),
@@ -45,8 +44,19 @@ export default defineType({
       options: {
         source: 'title',
         maxLength: 96,
+        aiAssist: {exclude: true},
       },
       validation: (Rule) => Rule.required(),
+      group: 'content',
+    }),
+    defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'reference',
+      to: [{type: 'person'}],
+      options: {aiAssist: {exclude: true}},
+      validation: (Rule) => Rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'featuredImage',
@@ -73,7 +83,7 @@ export default defineType({
       ],
       validation: (Rule) =>
         Rule.custom((value, context) => {
-          const doc = context.document as any
+          const doc = context.document as {publishedAt?: string}
           if (doc?.publishedAt && !value) {
             return 'Featured image is required for published articles'
           }
@@ -83,7 +93,7 @@ export default defineType({
     }),
     defineField({
       name: 'excerpt',
-      title: 'Excerpt',
+      title: 'Summary',
       type: 'array',
       options: {
         aiAssist: {},
@@ -122,6 +132,7 @@ export default defineType({
       name: 'body',
       title: 'Body',
       ...portableTextConfig,
+      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required(),
       group: 'content',
     }),
@@ -130,41 +141,84 @@ export default defineType({
       title: 'Call to Action',
       type: 'reference',
       to: [{type: 'cta'}],
+      options: {aiAssist: {exclude: true}},
       description: 'Optional call-to-action to include',
       group: 'content',
     }),
 
-    // Metadata fields
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: [{type: 'person'}],
-      validation: (Rule) => Rule.required(),
-      group: 'meta',
-    }),
+    // ─── Metadata (11–16 + hidden OG) ───────────────────────────────────────
     defineField({
       name: 'publishedAt',
-      title: 'Published At',
+      title: 'Published Date',
       type: 'datetime',
+      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required(),
-      group: 'meta',
-    }),
-    
-    // SEO fields
-    defineField({
-      name: 'seo',
-      title: 'SEO',
-      type: 'seo',
-      group: 'seo',
+      group: 'metadata',
     }),
 
-    // Migration fields
+    defineField({
+      name: 'lastUpdatedAt',
+      title: 'Last Updated Date',
+      type: 'datetime',
+      options: {aiAssist: {exclude: true}},
+      description: 'When this post was last updated',
+      group: 'metadata',
+    }),
+          // SEO fields
+  defineField({
+    name: 'seo',
+    title: 'SEO',
+    type: 'seo',
+    group: 'content',
+  }),
+
+
+    defineField({
+      name: 'noIndex',
+      title: 'No Index and No Follow?',
+      type: 'boolean',
+      options: {aiAssist: {exclude: true}},
+      description: 'Prevent this page from appearing in search engines',
+      initialValue: false,
+      group: 'metadata',
+    }),
+    // Hidden: mapped from Featured image / Meta title / Meta description at display time
+    defineField({
+      name: 'ogImage',
+      title: 'OG Image',
+      type: 'image',
+      description: 'Defaults to Featured image when empty',
+      options: {hotspot: true, aiAssist: {exclude: true}},
+      hidden: () => true,
+      group: 'metadata',
+    }),
+    defineField({
+      name: 'ogTitle',
+      title: 'OG Title',
+      type: 'string',
+      options: {aiAssist: {exclude: true}},
+      description: 'Defaults to Meta title when empty',
+      hidden: () => true,
+      group: 'metadata',
+    }),
+    defineField({
+      name: 'ogDescription',
+      title: 'OG Description',
+      type: 'text',
+      rows: 2,
+      options: {aiAssist: {exclude: true}},
+      description: 'Defaults to Meta description when empty',
+      hidden: () => true,
+      group: 'metadata',
+    }),
+    
     defineField({
       name: 'migrationData',
       title: 'Migration Data',
       type: 'migrationMetadata',
-      group: 'migration',
+      options: {aiAssist: {exclude: true}},
+      hidden: () => true,
+      group: 'metadata',
     }),
   ],
   preview: {
