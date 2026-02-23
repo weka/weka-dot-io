@@ -17,7 +17,7 @@ export default defineType({
     // Status fields
     defineField({
       name: 'status',
-      title: 'Production Status',
+      title: 'Migration Status Changed',
       type: 'string',
       options: {
         list: [
