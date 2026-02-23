@@ -16,7 +16,7 @@ export default defineType({
     // ─── Content (1–10) ─────────────────────────────────────────────────────
     defineField({
       name: 'status',
-      title: 'Migration Status Changed',
+      title: 'Migration Status',
       type: 'string',
       options: {
         list: [
