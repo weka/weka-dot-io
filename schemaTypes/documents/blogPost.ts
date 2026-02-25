@@ -72,11 +72,11 @@ export default defineType({
           type: 'string',
           validation: (Rule) => Rule.required(),
         },
-        /*{
+        {
           name: 'caption',
           title: 'Caption',
           type: 'string',
-        },*/
+        },
       ],
       validation: (Rule) =>
         Rule.custom((value, context) => {
