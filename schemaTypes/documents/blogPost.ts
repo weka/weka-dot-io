@@ -16,7 +16,7 @@ export default defineType({
     // ─── Content (1–10) ─────────────────────────────────────────────────────
     defineField({
       name: 'status',
-      title: 'Migration Status Changed',
+      title: 'Migration Status',
       type: 'string',
       options: {
         list: [
@@ -26,7 +26,6 @@ export default defineType({
           {title: 'Help needed', value: 'helpNeeded'},
         ],
         layout: 'dropdown',
-        aiAssist: {exclude: true},
       },
       group: 'content',
     }),
@@ -34,7 +33,6 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required().max(142),
       group: 'content',
     }),
@@ -45,7 +43,6 @@ export default defineType({
       options: {
         source: 'title',
         maxLength: 96,
-        aiAssist: {exclude: true},
       },
       validation: (Rule) => Rule.required(),
       group: 'content',
@@ -55,7 +52,6 @@ export default defineType({
       title: 'Author',
       type: 'reference',
       to: [{type: 'person'}],
-      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required(),
       group: 'content',
     }),
@@ -133,7 +129,6 @@ export default defineType({
       name: 'body',
       title: 'Body',
       ...portableTextConfig,
-      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required(),
       group: 'content',
     }),
@@ -142,7 +137,6 @@ export default defineType({
       title: 'Call to Action',
       type: 'reference',
       to: [{type: 'cta'}],
-      options: {aiAssist: {exclude: true}},
       description: 'Optional call-to-action to include',
       group: 'content',
     }),
@@ -152,33 +146,28 @@ export default defineType({
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
-      options: {aiAssist: {exclude: true}},
       validation: (Rule) => Rule.required(),
       group: 'metadata',
     }),
-
+    // SEO fields come from this object (metaTitle, metaDescription, etc.) – no data loss
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      description: 'Meta title, meta description, canonical URL, and related SEO fields.',
+      group: 'metadata',
+    }),
     defineField({
       name: 'lastUpdatedAt',
       title: 'Last Updated Date',
       type: 'datetime',
-      options: {aiAssist: {exclude: true}},
       description: 'When this post was last updated',
       group: 'metadata',
     }),
-          // SEO fields
-  defineField({
-    name: 'seo',
-    title: 'SEO',
-    type: 'seo',
-    group: 'content',
-  }),
-
-
     defineField({
       name: 'noIndex',
       title: 'No Index and No Follow?',
       type: 'boolean',
-      options: {aiAssist: {exclude: true}},
       description: 'Prevent this page from appearing in search engines',
       initialValue: false,
       group: 'metadata',
