@@ -72,11 +72,11 @@ export default defineType({
           type: 'string',
           validation: (Rule) => Rule.required(),
         },
-        {
+        /*{
           name: 'caption',
           title: 'Caption',
           type: 'string',
-        },
+        },*/
       ],
       validation: (Rule) =>
         Rule.custom((value, context) => {
@@ -142,13 +142,13 @@ export default defineType({
     }),
 
     // ─── Advanced (11–16 + hidden OG) ───────────────────────────────────────
-    defineField({
+   /* defineField({
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
       group: 'advanced',
-    }),
+    }),*/
     // SEO fields come from this object (metaTitle, metaDescription, etc.) – no data loss
     defineField({
       name: 'seo',
