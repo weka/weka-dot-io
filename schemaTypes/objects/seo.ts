@@ -9,6 +9,7 @@ export default defineType({
       name: 'metaTitle',
       title: 'Meta Title',
       type: 'string',
+      options: {aiAssist: {}},
       description: 'Override the document title for search engines (50-60 characters)',
       validation: (Rule) => Rule.max(60).warning('Keep meta titles under 60 characters'),
     }),
@@ -17,6 +18,7 @@ export default defineType({
       title: 'Meta Description',
       type: 'text',
       rows: 3,
+      options: {aiAssist: {}},
       description: 'Brief description for search engines (120-160 characters)',
       validation: (Rule) =>
         Rule.max(160).min(120).warning('Meta descriptions should be between 120-160 characters'),
@@ -41,6 +43,7 @@ export default defineType({
       description: 'Image for social media sharing (1200x630px recommended)',
       options: {
         hotspot: true,
+        aiAssist: {exclude: true},
       },
     }),
     defineField({
@@ -48,6 +51,7 @@ export default defineType({
       title: 'Canonical URL',
       type: 'url',
       description: 'Set if this content is duplicated elsewhere',
+      options: {aiAssist: {exclude: true}},
     }),
     defineField({
       name: 'noIndex',
@@ -55,6 +59,7 @@ export default defineType({
       type: 'boolean',
       description: 'Prevent this page from appearing in search engines',
       initialValue: false,
+      options: {aiAssist: {exclude: true}},
     }),
     /*defineField({
       name: 'focusKeywords',
