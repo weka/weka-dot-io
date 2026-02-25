@@ -142,13 +142,14 @@ export default defineType({
     }),
 
     // ─── Advanced (11–16 + hidden OG) ───────────────────────────────────────
-   /* defineField({
+    defineField({
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
+      hidden: () => true,
       group: 'advanced',
-    }),*/
+    }),
     // SEO fields come from this object (metaTitle, metaDescription, etc.) – no data loss
     defineField({
       name: 'seo',
