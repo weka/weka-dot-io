@@ -10,7 +10,7 @@ export default defineType({
   icon: FiEdit,
   groups: [
     {name: 'content', title: 'Content', default: true},
-    {name: 'metadata', title: 'Metadata'},
+    {name: 'advanced', title: 'Advanced'},
   ],
   fields: [
     // ─── Content (1–10) ─────────────────────────────────────────────────────
@@ -141,13 +141,13 @@ export default defineType({
       group: 'content',
     }),
 
-    // ─── Metadata (11–16 + hidden OG) ───────────────────────────────────────
+    // ─── Advanced (11–16 + hidden OG) ───────────────────────────────────────
     defineField({
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
-      group: 'metadata',
+      group: 'advanced',
     }),
     // SEO fields come from this object (metaTitle, metaDescription, etc.) – no data loss
     defineField({
@@ -155,23 +155,23 @@ export default defineType({
       title: 'SEO',
       type: 'seo',
       description: 'Meta title, meta description, canonical URL, and related SEO fields.',
-      group: 'metadata',
+      group: 'advanced',
     }),
     defineField({
       name: 'lastUpdatedAt',
       title: 'Last Updated Date',
       type: 'datetime',
       description: 'When this post was last updated',
-      group: 'metadata',
+      group: 'advanced',
     }),
-    defineField({
+    /*defineField({
       name: 'noIndex',
       title: 'No Index and No Follow?',
       type: 'boolean',
       description: 'Prevent this page from appearing in search engines',
       initialValue: false,
-      group: 'metadata',
-    }),
+      group: 'advanced',
+    }),*/
     // Hidden: mapped from Featured image / Meta title / Meta description at display time
     defineField({
       name: 'ogImage',
@@ -180,7 +180,7 @@ export default defineType({
       description: 'Defaults to Featured image when empty',
       options: {hotspot: true, aiAssist: {exclude: true}},
       hidden: () => true,
-      group: 'metadata',
+      group: 'advanced',
     }),
     defineField({
       name: 'ogTitle',
@@ -189,7 +189,7 @@ export default defineType({
       options: {aiAssist: {exclude: true}},
       description: 'Defaults to Meta title when empty',
       hidden: () => true,
-      group: 'metadata',
+      group: 'advanced',
     }),
     defineField({
       name: 'ogDescription',
@@ -199,7 +199,7 @@ export default defineType({
       options: {aiAssist: {exclude: true}},
       description: 'Defaults to Meta description when empty',
       hidden: () => true,
-      group: 'metadata',
+      group: 'advanced',
     }),
     
     defineField({
@@ -208,7 +208,7 @@ export default defineType({
       type: 'migrationMetadata',
       options: {aiAssist: {exclude: true}},
       hidden: () => true,
-      group: 'metadata',
+      group: 'advanced',
     }),
   ],
   preview: {
