@@ -10,7 +10,7 @@ export default defineType({
       title: 'Meta Title',
       type: 'string',
       options: {aiAssist: {}},
-      description: 'Override the document title for search engines (50-60 characters)',
+      description: 'Use AI Assist to generate it. You can update it, but keep to < 60 characters.',
       validation: (Rule) => Rule.max(60).warning('Keep meta titles under 60 characters'),
     }),
     defineField({
@@ -19,7 +19,7 @@ export default defineType({
       type: 'text',
       rows: 3,
       options: {aiAssist: {}},
-      description: 'Brief description for search engines (120-160 characters)',
+      description: 'Use AI Assist to generate it. You can update it, but keep to < 158 characters.',
       validation: (Rule) =>
         Rule.max(160).min(120).warning('Meta descriptions should be between 120-160 characters'),
     }),
