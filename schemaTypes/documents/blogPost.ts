@@ -70,6 +70,7 @@ export default defineType({
           name: 'alt',
           title: 'Alt Text',
           type: 'string',
+          description: 'Use AI Assist to generate it.',
           validation: (Rule) => Rule.required(),
         },
        /* {
@@ -122,7 +123,7 @@ export default defineType({
           },
         }),
       ],
-      description: 'TL;DR summary for blog posts',
+      description: 'Use AI Assist to generate it.',
       group: 'content',
     }),
     defineField({
