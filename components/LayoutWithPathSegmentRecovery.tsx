@@ -1,19 +1,23 @@
 /**
- * Layout wrapper that catches the path-segment crash when closing the AI instruction pane.
- * Works in deployed Studio (no patch required). See PathSegmentErrorBoundary.
+ * Layout wrapper: gates initial load on bad URL and wraps in error boundary.
+ * Prevents "Expected path segment to be an object with a _key property" crash.
  */
 import React from 'react'
 import {useRouter} from 'sanity/router'
-import type {LayoutProps} from 'sanity'
 import {PathSegmentErrorBoundary} from './PathSegmentErrorBoundary'
+import {PathSegmentUrlGate} from './PathSegmentUrlGate'
 
 type LayoutComponentProps = {renderDefault: (props: LayoutComponentProps) => React.ReactNode}
 
 export function LayoutWithPathSegmentRecovery(props: LayoutComponentProps) {
   const router = useRouter()
+  const state = router.state as {pathKey?: string} | undefined
+  const pathKey = state?.pathKey ?? ''
   return (
     <PathSegmentErrorBoundary router={router}>
-      {props.renderDefault(props)}
+      <PathSegmentUrlGate key={pathKey}>
+        {props.renderDefault(props)}
+      </PathSegmentUrlGate>
     </PathSegmentErrorBoundary>
   )
 }

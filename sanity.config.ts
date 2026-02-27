@@ -14,6 +14,7 @@ import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {WekaLogo} from './components/WekaLogo'
 import {LayoutWithPathSegmentRecovery} from './components/LayoutWithPathSegmentRecovery'
+import {ActiveToolLayoutWithPathSegmentRecovery} from './components/ActiveToolLayoutWithPathSegmentRecovery'
 
 const previewOrigin =
   process.env.SANITY_STUDIO_PREVIEW_URL ||
@@ -137,7 +138,10 @@ export default defineConfig([
     plugins: sharedPlugins,
     schema: {types: schemaTypes},
     studio: {
-      components: {layout: LayoutWithPathSegmentRecovery},
+      components: {
+        layout: LayoutWithPathSegmentRecovery,
+        activeToolLayout: ActiveToolLayoutWithPathSegmentRecovery,
+      },
     },
     form: {
       image: {
@@ -155,7 +159,10 @@ export default defineConfig([
     plugins: sharedPlugins,
     schema: {types: schemaTypes},
     studio: {
-      components: {layout: LayoutWithPathSegmentRecovery},
+      components: {
+        layout: LayoutWithPathSegmentRecovery,
+        activeToolLayout: ActiveToolLayoutWithPathSegmentRecovery,
+      },
     },
     form: {
       image: {
