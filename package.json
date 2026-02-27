@@ -9,7 +9,8 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "postinstall": "patch-package"
   },
   "keywords": [
     "sanity"
@@ -31,6 +32,7 @@
     "@sanity/eslint-config-studio": "^6.0.0",
     "@types/react": "^19.1",
     "eslint": "^9.28",
+    "patch-package": "^8.0.0",
     "prettier": "^3.5",
     "typescript": "^5.8"
   },
