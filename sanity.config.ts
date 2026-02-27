@@ -13,6 +13,7 @@ import {BugIcon, RocketIcon} from '@sanity/icons'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {WekaLogo} from './components/WekaLogo'
+import {LayoutWithPathSegmentRecovery} from './components/LayoutWithPathSegmentRecovery'
 
 const previewOrigin =
   process.env.SANITY_STUDIO_PREVIEW_URL ||
@@ -135,6 +136,9 @@ export default defineConfig([
     dataset: 'production',
     plugins: sharedPlugins,
     schema: {types: schemaTypes},
+    studio: {
+      components: {layout: LayoutWithPathSegmentRecovery},
+    },
     form: {
       image: {
         assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
@@ -150,6 +154,9 @@ export default defineConfig([
     dataset: 'dev',
     plugins: sharedPlugins,
     schema: {types: schemaTypes},
+    studio: {
+      components: {layout: LayoutWithPathSegmentRecovery},
+    },
     form: {
       image: {
         assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
