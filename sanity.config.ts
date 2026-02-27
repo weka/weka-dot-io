@@ -72,36 +72,9 @@ const sharedPlugins = [
               },
             ],
           },
-          {
-            path: 'metaTitle',
-            instructions: [
-              {
-                _key: 'meta-title-default',
-                title: 'Suggest meta title',
-                prompt: [
-                  makePromptBlock(
-                    'Suggest an SEO meta title (50–60 characters) for this post. Include the main topic and brand or site name when it fits. Make it clear and click-worthy.',
-                    'meta-title-p1',
-                  ),
-                ],
-              },
-            ],
-          },
-          {
-            path: 'metaDescription',
-            instructions: [
-              {
-                _key: 'meta-desc-default',
-                title: 'Suggest meta description',
-                prompt: [
-                  makePromptBlock(
-                    'Write an SEO meta description (120–160 characters) for this post. Summarize the content clearly and include a reason to click. Use active language.',
-                    'meta-desc-p1',
-                  ),
-                ],
-              },
-            ],
-          },
+          // Note: metaTitle and metaDescription presets removed to avoid Structure tool crash
+          // when closing the AI instruction pane (path ['seo', 'metaDescription'] is misinterpreted
+          // as an array path). Use AI Assist inline on the SEO fields in the form instead.
         ],
       },
     },
