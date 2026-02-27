@@ -7,3 +7,5 @@
 **Bug:** Sanity core throws "Expected path segment to be an object with a _key property" because `getArrayFieldsetAndFieldGroupOperations` receives a path whose first segment is an object key (e.g. `'seo'`) instead of an array key segment. When the segment is not a key segment, this patch returns `[]` instead of throwing, so the Studio no longer crashes.
 
 **Remove when:** Sanity fixes the path-segment handling upstream. Check Sanity changelog for a fix, then delete this patch and run `npm install`.
+
+**Deployed Studio:** With `autoUpdates: true`, the hosted Studio loads Sanity from CDN so this patch is not used. We set `autoUpdates: false` in `sanity.cli.ts` so the deployed bundle includes the patched code. Re-enable auto-updates after removing this patch.
