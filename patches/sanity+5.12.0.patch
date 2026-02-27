@@ -1,0 +1,11 @@
+diff --git a/lib/index.js b/lib/index.js
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -58194,7 +58194,7 @@
+   const [segment, ...rest] = path;
+   if (!isKeySegment(segment))
+-    throw new Error("Expected path segment to be an object with a _key property");
++    return [];
+   const foundMember = state.members.find((member) => member.key === segment._key);
+   return foundMember ? getFieldsetAndFieldGroupOperations(foundMember.item, rest) : [];
+ }
