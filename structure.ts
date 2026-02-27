@@ -182,66 +182,96 @@ export const structure: StructureResolver = async (S, context) => {
                     .title('Articles')
                     .items([
                       S.listItem()
+                        .id('allArticles')
                         .title('All Articles')
                         .icon(FiEdit)
                         .child(
                           S.documentTypeList('blogPost')
+                            .id('allArticlesList')
                             .title('All Articles')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
+                            .canHandleIntent((intentName, params) => {
+                              if (intentName === 'edit' && params?.type === 'blogPost') return true
+                              if (intentName === 'create' && params?.type === 'blogPost') return true
+                              return false
+                            })
                             .child((documentId) =>
-                              S.document().documentId(documentId).schemaType('blogPost'),
+                              S.document()
+                                .id('blogPostEditor')
+                                .documentId(documentId)
+                                .schemaType('blogPost'),
                             ),
                         ),
                       S.listItem()
+                        .id('isUpdated')
                         .title('Is updated')
                         .icon(FiEdit)
                         .child(
                           S.documentList()
+                            .id('isUpdatedList')
                             .title('Is updated')
                             .filter('_type == "blogPost" && status == "isUpdated"')
                             .apiVersion('2025-01-01')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                             .child((documentId) =>
-                              S.document().documentId(documentId).schemaType('blogPost'),
+                              S.document()
+                                .id('blogPostEditor')
+                                .documentId(documentId)
+                                .schemaType('blogPost'),
                             ),
                         ),
                       S.listItem()
+                        .id('needsUpdating')
                         .title('Needs updating')
                         .icon(FiEdit)
                         .child(
                           S.documentList()
+                            .id('needsUpdatingList')
                             .title('Needs updating')
                             .filter('_type == "blogPost" && status == "needsUpdating"')
                             .apiVersion('2025-01-01')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                             .child((documentId) =>
-                              S.document().documentId(documentId).schemaType('blogPost'),
+                              S.document()
+                                .id('blogPostEditor')
+                                .documentId(documentId)
+                                .schemaType('blogPost'),
                             ),
                         ),
                       S.listItem()
+                        .id('archiveDelete')
                         .title('Archive/Delete')
                         .icon(FiEdit)
                         .child(
                           S.documentList()
+                            .id('archiveDeleteList')
                             .title('Archive/Delete')
                             .filter('_type == "blogPost" && status == "archiveDelete"')
                             .apiVersion('2025-01-01')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                             .child((documentId) =>
-                              S.document().documentId(documentId).schemaType('blogPost'),
+                              S.document()
+                                .id('blogPostEditor')
+                                .documentId(documentId)
+                                .schemaType('blogPost'),
                             ),
                         ),
                       S.listItem()
+                        .id('helpNeeded')
                         .title('Help needed')
                         .icon(FiEdit)
                         .child(
                           S.documentList()
+                            .id('helpNeededList')
                             .title('Help needed')
                             .filter('_type == "blogPost" && status == "helpNeeded"')
                             .apiVersion('2025-01-01')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                             .child((documentId) =>
-                              S.document().documentId(documentId).schemaType('blogPost'),
+                              S.document()
+                                .id('blogPostEditor')
+                                .documentId(documentId)
+                                .schemaType('blogPost'),
                             ),
                         ),
                     ]),
