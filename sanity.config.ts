@@ -9,7 +9,6 @@ import {
 import {table} from '@sanity/table'
 import {media} from 'sanity-plugin-media'
 import {assist} from '@sanity/assist'
-import {BugIcon, RocketIcon} from '@sanity/icons'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {WekaLogo} from './components/WekaLogo'
@@ -127,47 +126,23 @@ const sharedPlugins = [
   media(),
 ]
 
-export default defineConfig([
-  {
-    name: 'production',
-    title: 'weka.io',
-    icon: WekaLogo,
-    basePath: '/production',
-    projectId: 'ult5g8gw',
-    dataset: 'production',
-    plugins: sharedPlugins,
-    schema: {types: schemaTypes},
-    studio: {
-      components: {
-        layout: LayoutWithPathSegmentRecovery,
-        activeToolLayout: ActiveToolLayoutWithPathSegmentRecovery,
-      },
-    },
-    form: {
-      image: {
-        assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
-      },
+export default defineConfig({
+  name: 'default',
+  title: 'weka.io',
+  icon: WekaLogo,
+  projectId: 'ult5g8gw',
+  dataset: 'production',
+  plugins: sharedPlugins,
+  schema: {types: schemaTypes},
+  studio: {
+    components: {
+      layout: LayoutWithPathSegmentRecovery,
+      activeToolLayout: ActiveToolLayoutWithPathSegmentRecovery,
     },
   },
-  {
-    name: 'dev',
-    title: 'QA weka.io',
-    icon: RocketIcon,
-    basePath: '/dev',
-    projectId: 'ult5g8gw',
-    dataset: 'dev',
-    plugins: sharedPlugins,
-    schema: {types: schemaTypes},
-    studio: {
-      components: {
-        layout: LayoutWithPathSegmentRecovery,
-        activeToolLayout: ActiveToolLayoutWithPathSegmentRecovery,
-      },
-    },
-    form: {
-      image: {
-        assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
-      },
+  form: {
+    image: {
+      assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
     },
   },
-])
+})
