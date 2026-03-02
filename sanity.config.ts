@@ -131,7 +131,7 @@ export default defineConfig({
   title: 'QA weka.io',
   icon: WekaLogo,
   projectId: 'ult5g8gw',
-  dataset: 'production',
+  dataset: 'dev',
   plugins: sharedPlugins,
   schema: {types: schemaTypes},
   studio: {
