@@ -128,7 +128,7 @@ const sharedPlugins = [
 
 export default defineConfig({
   name: 'default',
-  title: 'weka.io',
+  title: 'QA weka.io',
   icon: WekaLogo,
   projectId: 'ult5g8gw',
   dataset: 'production',
