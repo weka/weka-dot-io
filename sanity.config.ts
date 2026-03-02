@@ -7,7 +7,7 @@ import {
   presentationTool,
 } from 'sanity/presentation'
 import {table} from '@sanity/table'
-import {media} from 'sanity-plugin-media'
+import {media, mediaAssetSource} from 'sanity-plugin-media'
 import {assist} from '@sanity/assist'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
@@ -141,8 +141,9 @@ export default defineConfig({
     },
   },
   form: {
+    // Single "Select" experience: only Media source (browse + search). No dropdown.
     image: {
-      assetSources: (prev) => prev.filter((source) => source.name !== 'media'),
+      assetSources: () => [mediaAssetSource],
     },
   },
 })
