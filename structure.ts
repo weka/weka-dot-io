@@ -52,6 +52,26 @@ export const structure: StructureResolver = async (S, context) => {
       .join(' ')
   }
 
+  // Article filter counts for Media Hub > Articles
+  const client = context.getClient({apiVersion: '2025-01-01'})
+  const [allCount, isUpdatedCount, needsUpdatingCount, archiveDeleteCount, helpNeededCount] =
+    await Promise.all([
+      client.fetch<number>(`count(*[_type == "blogPost"])`),
+      client.fetch<number>(`count(*[_type == "blogPost" && status == "isUpdated"])`),
+      client.fetch<number>(`count(*[_type == "blogPost" && status == "needsUpdating"])`),
+      client.fetch<number>(`count(*[_type == "blogPost" && status == "archiveDelete"])`),
+      client.fetch<number>(`count(*[_type == "blogPost" && status == "helpNeeded"])`),
+    ])
+
+  const n = (v: number | undefined | null) => (v != null && !Number.isNaN(v) ? v : 0)
+  const articleCounts = {
+    all: n(allCount),
+    isUpdated: n(isUpdatedCount),
+    needsUpdating: n(needsUpdatingCount),
+    archiveDelete: n(archiveDeleteCount),
+    helpNeeded: n(helpNeededCount),
+  }
+
   return S.list()
     .title('Content')
     .items([
@@ -183,7 +203,7 @@ export const structure: StructureResolver = async (S, context) => {
                     .items([
                       S.listItem()
                         .id('allArticles')
-                        .title('All Articles')
+                        .title(`All Articles (${articleCounts.all} posts)`)
                         .icon(FiEdit)
                         .child(
                           S.documentTypeList('blogPost')
@@ -204,12 +224,12 @@ export const structure: StructureResolver = async (S, context) => {
                         ),
                       S.listItem()
                         .id('isUpdated')
-                        .title('Is updated')
+                        .title(`Is updated (${articleCounts.isUpdated} posts)`)
                         .icon(FiEdit)
                         .child(
                           S.documentList()
                             .id('isUpdatedList')
-                            .title('Is updated')
+                            .title(`Is updated (${articleCounts.isUpdated} posts)`)
                             .filter('_type == "blogPost" && status == "isUpdated"')
                             .apiVersion('2025-01-01')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
@@ -222,7 +242,7 @@ export const structure: StructureResolver = async (S, context) => {
                         ),
                       S.listItem()
                         .id('needsUpdating')
-                        .title('Needs updating')
+                        .title(`Needs updating (${articleCounts.needsUpdating} posts)`)
                         .icon(FiEdit)
                         .child(
                           S.documentList()
@@ -240,12 +260,12 @@ export const structure: StructureResolver = async (S, context) => {
                         ),
                       S.listItem()
                         .id('archiveDelete')
-                        .title('Archive/Delete')
+                        .title(`Archive/Delete (${articleCounts.archiveDelete} posts)`)
                         .icon(FiEdit)
                         .child(
                           S.documentList()
                             .id('archiveDeleteList')
-                            .title('Archive/Delete')
+                            .title(`Archive/Delete (${articleCounts.archiveDelete} posts)`)
                             .filter('_type == "blogPost" && status == "archiveDelete"')
                             .apiVersion('2025-01-01')
                             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
@@ -258,7 +278,7 @@ export const structure: StructureResolver = async (S, context) => {
                         ),
                       S.listItem()
                         .id('helpNeeded')
-                        .title('Help needed')
+                        .title(`Help needed (${articleCounts.helpNeeded} posts)`)
                         .icon(FiEdit)
                         .child(
                           S.documentList()
