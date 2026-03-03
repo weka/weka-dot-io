@@ -11,7 +11,7 @@ export default defineType({
       type: 'string',
       options: {aiAssist: {}},
       description: 'Use AI Assist to generate it. You can update it, but keep to < 60 characters.',
-      validation: (Rule) => Rule.max(60).warning('Keep meta titles under 60 characters'),
+      validation: (Rule) => Rule.required().max(60).warning('Keep meta titles under 60 characters'),
     }),
     defineField({
       name: 'metaDescription',
@@ -21,7 +21,7 @@ export default defineType({
       options: {aiAssist: {}},
       description: 'Use AI Assist to generate it. You can update it, but keep to < 158 characters.',
       validation: (Rule) =>
-        Rule.max(160).min(120).warning('Meta descriptions should be between 120-160 characters'),
+        Rule.required().max(160).min(120).warning('Meta descriptions should be between 120-160 characters'),
     }),
     /*defineField({
       name: 'ogTitle',

@@ -27,13 +27,14 @@ export default defineType({
         ],
         layout: 'dropdown',
       },
+      validation: (Rule) => Rule.required().error('Migration Status is required before publish'),
       group: 'content',
     }),
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required().max(142),
+      validation: (Rule) => Rule.required().max(142).error('Title is required before publish'),
       group: 'content',
     }),
     defineField({
@@ -44,7 +45,7 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error('Slug is required before publish'),
       group: 'content',
     }),
     defineField({
@@ -52,7 +53,7 @@ export default defineType({
       title: 'Author',
       type: 'reference',
       to: [{type: 'person'}],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error('Author is required before publish'),
       group: 'content',
     }),
     defineField({
@@ -71,7 +72,7 @@ export default defineType({
           title: 'Alt Text',
           type: 'string',
           description: 'Use AI Assist to generate it.',
-          validation: (Rule) => Rule.required(),
+          validation: (Rule) => Rule.required().error('Featured image alt text is required before publish'),
         },
        /* {
           name: 'caption',
@@ -124,13 +125,24 @@ export default defineType({
         }),
       ],
       description: 'Use AI Assist to generate it.',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as {publishedAt?: string}
+          if (doc?.publishedAt) {
+            const blocks = value as {children?: unknown[]}[]
+            if (!blocks?.length || blocks.every((b) => !b.children?.length)) {
+              return 'Summary is required for published articles'
+            }
+          }
+          return true
+        }),
       group: 'content',
     }),
     defineField({
       name: 'body',
       title: 'Body',
       ...portableTextConfig,
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error('Body is required before publish'),
       group: 'content',
     }),
     defineField({
@@ -157,6 +169,17 @@ export default defineType({
       title: 'SEO',
       type: 'seo',
       description: 'Meta title, meta description, canonical URL, and related SEO fields.',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as {publishedAt?: string}
+          if (doc?.publishedAt) {
+            if (!value) return 'SEO is required for published articles'
+            const seo = value as {metaTitle?: string; metaDescription?: string}
+            if (!seo.metaTitle?.trim()) return 'Meta title is required for published articles'
+            if (!seo.metaDescription?.trim()) return 'Meta description is required for published articles'
+          }
+          return true
+        }),
       group: 'advanced',
     }),
     defineField({
