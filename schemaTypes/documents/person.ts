@@ -14,35 +14,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'email',
-      title: 'Email',
-      type: 'email',
-    }),
-    defineField({
-      name: 'bio',
-      title: 'Bio',
-      type: 'text',
-      rows: 4,
-    }),
-    defineField({
-      name: 'image',
-      title: 'Profile Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
       name: 'title',
       title: 'Job Title',
       type: 'string',
@@ -52,7 +23,21 @@ export default defineType({
       title: 'Company',
       type: 'reference',
       to: [{ type: 'company' }],
-      description: 'The company this person is associated with',
+    }),
+    defineField({
+      name: 'image',
+      title: 'Profile Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      description: 'Sometimes used in quotes',
+    }),
+    defineField({
+      name: 'bio',
+      title: 'Bio',
+      type: 'text',
+      rows: 4,
     }),
     defineField({
       name: 'linkedin',
