@@ -61,12 +61,13 @@ export default defineType({
       initialValue: false,
       options: {aiAssist: {exclude: true}},
     }),
-    /*defineField({
+    defineField({
       name: 'focusKeywords',
       title: 'Focus Keywords',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
       description: 'Primary keywords for this content',
-    }),*/
+      hidden: () => true,
+    }),
   ],
 })
