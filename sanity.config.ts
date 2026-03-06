@@ -12,6 +12,7 @@ import {assist} from '@sanity/assist'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {WekaLogo} from './components/WekaLogo'
+import {RocketLogo} from './components/RocketLogo'
 import {LayoutWithPathSegmentRecovery} from './components/LayoutWithPathSegmentRecovery'
 import {ActiveToolLayoutWithPathSegmentRecovery} from './components/ActiveToolLayoutWithPathSegmentRecovery'
 
@@ -129,7 +130,7 @@ const sharedPlugins = [
 export default defineConfig({
   name: 'default',
   title: 'weka.io',
-  icon: WekaLogo,
+  icon: RocketLogo,
   projectId: 'ult5g8gw',
   dataset: 'production',
   plugins: sharedPlugins,
