@@ -1,6 +1,7 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {BugIcon} from '@sanity/icons'
 import {
   defineDocuments,
   defineLocations,
@@ -12,7 +13,6 @@ import {assist} from '@sanity/assist'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {WekaLogo} from './components/WekaLogo'
-import {RocketLogo} from './components/RocketLogo'
 import {LayoutWithPathSegmentRecovery} from './components/LayoutWithPathSegmentRecovery'
 import {ActiveToolLayoutWithPathSegmentRecovery} from './components/ActiveToolLayoutWithPathSegmentRecovery'
 
@@ -130,7 +130,7 @@ const sharedPlugins = [
 export default defineConfig({
   name: 'default',
   title: 'QA weka.io',
-  icon: RocketLogo,
+  icon: BugIcon,
   projectId: 'ult5g8gw',
   dataset: 'dev',
   plugins: sharedPlugins,
