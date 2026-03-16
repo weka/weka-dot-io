@@ -17,7 +17,7 @@ import {ActiveToolLayoutWithPathSegmentRecovery} from './components/ActiveToolLa
 
 const previewOrigin =
   process.env.SANITY_STUDIO_PREVIEW_URL ||
-  'https://next-vercel-shadcn-1acv.vercel.app'
+  'http://localhost:3000'
 
 // Default AI assist instructions for blogPost fields (so the Instruction panel is not empty)
 function makePromptBlock(text: string, key = 'p1') {
