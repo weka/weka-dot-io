@@ -1,9 +1,64 @@
-# Sanity Clean Content Studio
+# Weka – Sanity Studio + Next.js Frontend
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+Monorepo with **Sanity Studio** (content CMS) and **Next.js frontend** (from [next-vercel-shadcn](https://github.com/Manik589-weka/next-vercel-shadcn)).
 
-Now you can do the following things:
+## Structure
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+- **`studio/`** – Sanity Studio (schema, structure, components). Content for weka.io blog and related types.
+- **`frontend/`** – Next.js app (Shadcn, Tailwind). Consumes the same Sanity project/dataset for the blog and optional embedded Studio.
+
+## Prerequisites
+
+- Node.js 20+ (or 22+)
+- Same Sanity project for both apps: `ult5g8gw`, dataset `production` (or set in env)
+
+## Setup
+
+1. **Install root dependency** (for running both apps together):
+   ```bash
+   npm install
+   ```
+
+2. **Studio** (already has its own `node_modules` if you moved it; otherwise):
+   ```bash
+   cd studio && npm install && cd ..
+   ```
+
+3. **Frontend** (already ran once; if needed):
+   ```bash
+   cd frontend && npm install && cd ..
+   ```
+
+4. **Environment**
+   - `frontend/.env.local` is set with `NEXT_PUBLIC_SANITY_PROJECT_ID=ult5g8gw` and `NEXT_PUBLIC_SANITY_DATASET=production`. Adjust if you use another dataset.
+   - Optional: `SANITY_STUDIO_PREVIEW_URL` (e.g. `http://localhost:3000`) so Studio’s Presentation tool points at your local frontend.
+
+## Run
+
+From repo root:
+
+- **Studio only** (default: http://localhost:3333):
+  ```bash
+  npm run dev:studio
+  ```
+
+- **Frontend only** (default: http://localhost:3000):
+  ```bash
+  npm run dev:frontend
+  ```
+
+- **Both** (Studio + Frontend in parallel):
+  ```bash
+  npm run dev
+  ```
+
+## Build
+
+- `npm run build:studio` – build Studio
+- `npm run build:frontend` – build Next.js
+- `npm run build` – build both (studio then frontend)
+
+## Deploy
+
+- **Studio**: from `studio/`, run `npm run deploy` (or your host’s Sanity deploy).
+- **Frontend**: deploy the `frontend/` app to Vercel or your Next.js host; set `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, and optionally `SANITY_API_READ_TOKEN` in the host’s environment.

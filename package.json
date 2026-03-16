@@ -1,45 +1,18 @@
 {
-  "name": "wekaio",
+  "name": "weka-live-sanity-monorepo",
   "private": true,
-  "version": "1.0.0",
-  "main": "package.json",
-  "license": "UNLICENSED",
+  "description": "Weka: Sanity Studio + Next.js frontend",
   "scripts": {
-    "dev": "sanity dev",
-    "start": "sanity start",
-    "build": "sanity build",
-    "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy",
-    "postinstall": "patch-package"
-  },
-  "keywords": [
-    "sanity"
-  ],
-  "dependencies": {
-    "@sanity/assist": "^5.0.4",
-    "@sanity/icons": "^3.7.4",
-    "@sanity/table": "^2.0.1",
-    "@sanity/vision": "^5.12.0",
-    "lottie-web": "^5.13.0",
-    "react": "^19.1",
-    "react-dom": "^19.1",
-    "react-icons": "^5.5.0",
-    "sanity": "^5.12.0",
-    "sanity-plugin-media": "^4.1.1",
-    "styled-components": "^6.1.18"
+    "dev": "concurrently -n studio,frontend -c blue,green \"npm run dev:studio\" \"npm run dev:frontend\"",
+    "dev:studio": "cd studio && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:studio": "cd studio && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "npm run build:studio && npm run build:frontend",
+    "start:studio": "cd studio && npm run start",
+    "start:frontend": "cd frontend && npm run start"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^6.0.0",
-    "@types/react": "^19.1",
-    "eslint": "^9.28",
-    "patch-package": "^8.0.0",
-    "prettier": "^3.5",
-    "typescript": "^5.8"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
+    "concurrently": "^9.1.0"
   }
 }
