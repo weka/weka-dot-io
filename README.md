@@ -54,9 +54,10 @@ From repo root:
 
 ## Build
 
-- `npm run build:studio` – build Studio
+- `npm run build` – build **frontend only** (used by Vercel; avoids building Studio)
 - `npm run build:frontend` – build Next.js
-- `npm run build` – build both (studio then frontend)
+- `npm run build:studio` – build Studio
+- `npm run build:all` – build both studio and frontend (for local)
 
 ## Deploy
 
