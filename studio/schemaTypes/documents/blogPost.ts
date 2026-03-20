@@ -91,6 +91,13 @@ export default defineType({
       group: 'content',
     }),
     defineField({
+      name: 'body',
+      title: 'Body',
+      ...portableTextConfig,
+      validation: (Rule) => Rule.required().error('Body is required before publish'),
+      group: 'content',
+    }),
+    defineField({
       name: 'excerpt',
       title: 'Summary',
       type: 'array',
@@ -136,13 +143,6 @@ export default defineType({
           }
           return true
         }),
-      group: 'content',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      ...portableTextConfig,
-      validation: (Rule) => Rule.required().error('Body is required before publish'),
       group: 'content',
     }),
     defineField({
