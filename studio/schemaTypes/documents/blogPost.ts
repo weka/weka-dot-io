@@ -153,6 +153,27 @@ export default defineType({
       description: 'Optional call-to-action to include',
       group: 'content',
     }),
+    defineField({
+      name: 'metaTitle',
+      title: 'Meta Title',
+      type: 'string',
+      options: {aiAssist: {}},
+      description: 'Use AI Assist to generate it. Keep to < 60 characters for search.',
+      validation: (Rule) =>
+        Rule.max(60).warning('Keep meta titles under 60 characters'),
+      group: 'content',
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'text',
+      rows: 3,
+      options: {aiAssist: {}},
+      description: 'Use AI Assist to generate it. Aim for 120–160 characters for search.',
+      validation: (Rule) =>
+        Rule.max(160).warning('Meta descriptions are best between 120–160 characters'),
+      group: 'content',
+    }),
 
     // ─── Advanced (11–16 + hidden OG) ───────────────────────────────────────
     defineField({
@@ -163,20 +184,17 @@ export default defineType({
       hidden: () => true,
       group: 'advanced',
     }),
-    // SEO fields come from this object (metaTitle, metaDescription, etc.) – no data loss
     defineField({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
-      description: 'Meta title, meta description, canonical URL, and related SEO fields.',
+      description: 'Canonical URL, Open Graph image, and related SEO options. Meta title and meta description are in the Content group.',
       validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const doc = context.document as {publishedAt?: string}
+        Rule.custom((_value, context) => {
+          const doc = context.document as {publishedAt?: string; metaTitle?: string; metaDescription?: string}
           if (doc?.publishedAt) {
-            if (!value) return 'SEO is required for published articles'
-            const seo = value as {metaTitle?: string; metaDescription?: string}
-            if (!seo.metaTitle?.trim()) return 'Meta title is required for published articles'
-            if (!seo.metaDescription?.trim()) return 'Meta description is required for published articles'
+            if (!doc.metaTitle?.trim()) return 'Meta title is required for published articles'
+            if (!doc.metaDescription?.trim()) return 'Meta description is required for published articles'
           }
           return true
         }),
