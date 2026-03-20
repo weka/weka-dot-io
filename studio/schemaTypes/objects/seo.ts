@@ -1,28 +1,10 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import {defineType, defineField} from 'sanity'
 
 export default defineType({
   name: 'seo',
   title: 'SEO',
   type: 'object',
   fields: [
-    defineField({
-      name: 'metaTitle',
-      title: 'Meta Title',
-      type: 'string',
-      options: {aiAssist: {}},
-      description: 'Use AI Assist to generate it. You can update it, but keep to < 60 characters.',
-      validation: (Rule) => Rule.required().max(60).warning('Keep meta titles under 60 characters'),
-    }),
-    defineField({
-      name: 'metaDescription',
-      title: 'Meta Description',
-      type: 'text',
-      rows: 3,
-      options: {aiAssist: {}},
-      description: 'Use AI Assist to generate it. You can update it, but keep to < 158 characters.',
-      validation: (Rule) =>
-        Rule.required().max(160).min(120).warning('Meta descriptions should be between 120-160 characters'),
-    }),
     /*defineField({
       name: 'ogTitle',
       title: 'Open Graph Title',

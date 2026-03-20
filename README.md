@@ -54,11 +54,17 @@ From repo root:
 
 ## Build
 
-- `npm run build:studio` – build Studio
+- `npm run build` – build **frontend only** (used by Vercel; avoids building Studio)
 - `npm run build:frontend` – build Next.js
-- `npm run build` – build both (studio then frontend)
+- `npm run build:studio` – build Studio
+- `npm run build:all` – build both studio and frontend (for local)
 
 ## Deploy
 
 - **Studio**: from `studio/`, run `npm run deploy` (or your host’s Sanity deploy).
-- **Frontend**: deploy the `frontend/` app to Vercel or your Next.js host; set `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, and optionally `SANITY_API_READ_TOKEN` in the host’s environment.
+- **Frontend (Vercel)**  
+  So only the Next.js app is built (Studio is a separate app and not deployed to Vercel):
+  1. In the Vercel project: **Settings → General → Root Directory** → set to **`frontend`** and Save.
+  2. Redeploy. Vercel will run `npm install` and `npm run build` inside `frontend/`; no Studio build runs.
+  3. In **Settings → Environment Variables**, set `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, and optionally `SANITY_API_READ_TOKEN`.
+- **Frontend (other hosts)**: build from the `frontend/` directory and set the same env vars.
