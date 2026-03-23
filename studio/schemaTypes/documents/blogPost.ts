@@ -1,5 +1,6 @@
 import {defineType, defineField, defineArrayMember} from 'sanity'
 import {FiEdit} from 'react-icons/fi'
+import {AuthorReferenceInput} from '../../components/AuthorReferenceInput'
 import {portableTextConfig} from '../objects/portableTextConfig'
 
 
@@ -54,6 +55,24 @@ export default defineType({
       type: 'reference',
       to: [{type: 'person'}],
       validation: (Rule) => Rule.required().error('Author is required before publish'),
+      components: {
+        input: AuthorReferenceInput,
+      },
+      group: 'content',
+    }),
+    defineField({
+      name: 'authorName',
+      title: 'Author name (search)',
+      type: 'string',
+      description:
+        'Filled automatically from the author so “Search list” can match author names. Do not edit.',
+      // Hidden fields can get weight 0 in Studio list search — explicit weight keeps this path indexed
+      options: {
+        search: {
+          weight: 5,
+        },
+      },
+      hidden: () => true,
       group: 'content',
     }),
     defineField({
