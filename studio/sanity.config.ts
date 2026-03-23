@@ -126,12 +126,37 @@ const sharedPlugins = [
   media(),
 ]
 
+/**
+ * SAML SSO (local + deployed Studio)
+ * 1. Org must have SAML configured: https://www.sanity.io/manage → Organization → SAML SSO
+ * 2. Copy the "SAML SSO login for Sanity Studio" snippet from Manage, or set:
+ *    SANITY_STUDIO_SSO_URL to the login URL shown there (project-specific).
+ * 3. Add your local origin to the project CORS allowlist in Manage (e.g. http://localhost:3333)
+ *    so the browser can complete login after redirect.
+ * CLI: sanity login --sso <your-org-slug>
+ */
+const ssoLoginUrl = process.env.SANITY_STUDIO_SSO_URL
+
 export default defineConfig({
   name: 'default',
   title: 'weka.io',
   icon: WekaLogo,
   projectId: 'ult5g8gw',
   dataset: 'production',
+  ...(ssoLoginUrl
+    ? {
+        auth: {
+          providers: (prev) => [
+            ...prev,
+            {
+              name: 'saml-sso',
+              title: 'Sign in with SSO',
+              url: ssoLoginUrl,
+            },
+          ],
+        },
+      }
+    : {}),
   plugins: sharedPlugins,
   schema: {types: schemaTypes},
   studio: {
