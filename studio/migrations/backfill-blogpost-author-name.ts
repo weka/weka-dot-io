@@ -4,8 +4,14 @@ import type {SanityDocument} from 'sanity'
 /**
  * Fills `authorName` from the referenced person so "Search list" can match author names.
  *
- *   # Use the same dataset as sanity.config.ts / Studio (e.g. dev or production)
+ *   # Same dataset as Studio (sanity.config.ts). Requires a token with write access:
+ *   #   sanity login
+ *   #   # or: SANITY_AUTH_TOKEN=<token with Editor role / mutate> npx sanity migration run ...
+ *
  *   npx sanity migration run backfill-blogpost-author-name --project ult5g8gw --dataset dev --no-dry-run
+ *
+ * If you see "Insufficient permissions; permission update required", the CLI is not using a
+ * user/token that can mutate this dataset — fix in manage.sanity.io (project → API → tokens).
  */
 export default defineMigration({
   title: 'Backfill blogPost.authorName from author reference',
